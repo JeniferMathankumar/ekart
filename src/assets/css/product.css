@@ -1,0 +1,90 @@
+.table tbody tr{
+
+transition:.3s;
+
+}
+
+.table tbody tr:hover{
+
+background:#f8f9fa;
+
+transform:scale(1.01);
+
+}
+
+.search-box{
+
+    border-radius:15px;
+    overflow:hidden;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+
+}
+
+.search-box input{
+
+    height:48px;
+
+}
+
+.search-box .input-group-text{
+
+    border-radius:15px 0 0 15px;
+
+}
+
+.card{
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08)!important;
+
+}
+
+.btn{
+
+    transition:.3s;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.form-select{
+
+    height:48px;
+
+    border-radius:15px;
+
+}
+
+.form-select:focus{
+
+    box-shadow:0 0 0 .2rem rgba(13,110,253,.15);
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+}
+
+.bg-light{
+
+    min-height:48px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}

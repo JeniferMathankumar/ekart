@@ -1,0 +1,227 @@
+.login-container{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.login-card {
+    width: 450px;
+    backdrop-filter: blur(20px);
+    
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all .3s ease;
+}
+.login-card:hover {
+    transform: translateY(-5px);
+}
+
+.login-left {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark Overlay */
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .2);
+}
+
+/* Center Content */
+
+.content {
+    position: relative;
+    z-index: 3;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ============================= */
+/* Typing Animation */
+/* ============================= */
+
+.typing {
+    font-size: 3rem;
+    font-weight: bold;
+
+    overflow: hidden;
+    white-space: nowrap;
+
+    border-right: 4px solid white;
+
+    width: 0;
+
+    animation:
+        typing 8s steps(22, end) forwards infinite,
+        blink .8s infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* ============================= */
+/* Floating Decorative Circles */
+/* ============================= */
+
+.login-left::before,
+.login-left::after {
+    content: "";
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.3);
+
+    animation: floatCircle 5s ease-in-out infinite;
+
+    z-index: 1;
+}
+
+.login-left::before {
+    width: 320px;
+    height: 320px;
+
+    top: -100px;
+    left: -100px;
+}
+
+.login-left::after {
+    width: 220px;
+    height: 220px;
+
+    bottom: -50px;
+    right: -50px;
+
+    animation-delay: 2s;
+}
+
+@keyframes floatCircle {
+
+    0%,
+    100% {
+        transform: translateY(30px);
+    }
+
+
+    50% {
+        transform: translateY(-35px);
+    }
+}
+
+/* ============================= */
+/* Floating Icons */
+/* ============================= */
+
+.icons {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.icons span {
+
+    position: absolute;
+
+    font-size: 40px;
+
+    opacity: .3;
+
+    animation: floatIcon 15s linear infinite;
+}
+
+.icons span:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.icons span:nth-child(2) {
+    left: 28%;
+    animation-delay: 2s;
+}
+
+.icons span:nth-child(3) {
+    left: 48%;
+    animation-delay: 4s;
+}
+
+.icons span:nth-child(4) {
+    left: 66%;
+    animation-delay: 6s;
+}
+
+.icons span:nth-child(5) {
+    left: 82%;
+    animation-delay: 8s;
+}
+
+.icons span:nth-child(6) {
+    left: 92%;
+    animation-delay: 10s;
+}
+
+@keyframes floatIcon {
+
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .3;
+    }
+
+    85% {
+        opacity: .3;
+    }
+
+    100% {
+        transform: translateY(-150px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+    .typing {
+        font-size: 2rem;
+    }
+
+    .icons span {
+        font-size: 28px;
+    }
+}

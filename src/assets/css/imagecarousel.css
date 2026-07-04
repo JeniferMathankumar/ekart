@@ -1,0 +1,80 @@
+.banner-img {
+    height: 250px;
+    object-fit: cover;
+    transition: transform .8s ease;
+}
+
+.carousel-item:hover .banner-img {
+    transform: scale(1.05);
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0,0,0,.2),
+        rgba(0,0,0,.6)
+    );
+    z-index: 1;
+}
+
+.carousel-caption {
+    z-index: 2;
+    bottom: 25%;
+}
+
+.carousel-caption h2 {
+    font-size: 3rem;
+    animation: slideUp .8s ease;
+}
+
+.carousel-caption p {
+    font-size: 1.2rem;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 6%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(255,255,255,.3);
+    border-radius: 50%;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media(max-width:768px){
+
+    .banner-img{
+        height:250px;
+    }
+
+    .carousel-caption{
+        bottom:15%;
+    }
+
+    .carousel-caption h2{
+        font-size:1.5rem;
+    }
+
+    .carousel-caption p{
+        display:none;
+    }
+}
