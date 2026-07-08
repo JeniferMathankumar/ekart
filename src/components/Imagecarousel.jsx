@@ -71,7 +71,7 @@ const Imagecarousel = () => {
                                 <div className="banner-overlay"></div>
 
                                 <img
-                                    src={`http://localhost:8080${image.bannerImg}`}
+                                    src={`${import.meta.env.VITE_BACKEND_URL}${image.bannerImg}`}
                                     className="d-block w-100 banner-img"
                                     alt="Banner"
                                 />

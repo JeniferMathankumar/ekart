@@ -107,7 +107,7 @@ export default function HomeProducts() {
                                             <div className="home-product-image">
 
                                                 <img
-                                                    src={product.imageUrl ? `http://localhost:8080${product.imageUrl}` : "https://placehold.co/200"}
+                                                    src={product.imageUrl ? `${import.meta.env.VITE_BACKEND_URL}${product.imageUrl}` : "https://placehold.co/200"}
                                                     alt={product.name}
                                                 />
 
@@ -179,7 +179,7 @@ export default function HomeProducts() {
                         <div className="row g-4 align-items-center">
                             <div className="col-md-5">
                                 <img
-                                    src={selectedProduct.imageUrl ? `http://localhost:8080${selectedProduct.imageUrl}` : "https://placehold.co/300"}
+                                    src={selectedProduct.imageUrl ? `${import.meta.env.VITE_BACKEND_URL}${selectedProduct.imageUrl}` : "https://placehold.co/300"}
                                     alt={selectedProduct.name}
                                     className="img-fluid rounded-3"
                                 />

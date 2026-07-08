@@ -25,7 +25,8 @@ const CategoryCard = () => {
   const [sortOrder, setSortOrder] = useState("name-asc");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
+const IMAGE_BASE_URL =
+    "https://ekart-backend-production-bc50.up.railway.app";
   // Form state
   const [formData, setFormData] = useState({ name: "", description: "", imageUrl: null });
   const [formErrors, setFormErrors] = useState({});
@@ -446,7 +447,7 @@ const CategoryCard = () => {
                 <article className="card h-100 shadow-sm hover-shadow transition-all">
                   <div className="position-relative">
                     <img
-                      src={category.imageUrl != null ? `http://localhost:8080${category.imageUrl}` : defaultImg}
+                      src={category.imageUrl != null ? `${import.meta.env.VITE_BACKEND_URL}${category.imageUrl}` : defaultImg}
                       alt={`${category.name} banner`}
                       className="card-img-top"
                       style={{ height: "160px", objectFit: "cover" }}
@@ -575,7 +576,7 @@ const CategoryCard = () => {
                         )
                           :
                           <img
-                            src={`http://localhost:8080${formData.imageUrl}`}
+                            src={`${import.meta.env.VITE_BACKEND_URL}${formData.imageUrl}`}
                             alt="image"
                             className="preview-image"
                           />
