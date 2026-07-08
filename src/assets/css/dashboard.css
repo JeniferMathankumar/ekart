@@ -54,9 +54,15 @@
 
     align-items: center;
 
-    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    box-shadow: 0 8px 20px rgba(223, 171, 171, 0.15);
 
     transition: all .3s ease;
+}
+.table tbody td{
+    padding: 20px ;
+}
+.table thead th{
+    padding: 20px ;
 }
 .table tbody tr{
     transition:0.25s;

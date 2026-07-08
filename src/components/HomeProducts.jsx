@@ -93,7 +93,9 @@ export default function HomeProducts() {
 
                             <div className="row g-4">
 
-                                {categoryProducts.slice(0, 8).map((product) => (
+                                {categoryProducts
+                                .slice(0, 4)
+                                .map((product) => (
 
                                     <div
                                         key={product.id}
@@ -108,8 +110,6 @@ export default function HomeProducts() {
                                                     src={product.imageUrl ? `http://localhost:8080${product.imageUrl}` : "https://placehold.co/200"}
                                                     alt={product.name}
                                                 />
-
-
 
                                                 <span className="badge bg-success home-stock-badge">
                                                     {product.stock > 0 ? "In Stock" : "Out of Stock"}

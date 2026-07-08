@@ -21,22 +21,6 @@ export default function RecentProducts() {
     const [sortOrder, setSortOrder] = useState("newest");
     const navigate = useNavigate();
 
-    // const products = [
-    //     {
-    //         id: 1,
-    //         name: "iPhone 15",
-    //         price: 85000,
-    //         stock: 12
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Samsung S24",
-    //         price: 70000,
-    //         stock: 8
-    //     }
-    // ];
-    // Fetch products
-
     useEffect(() => {
         dispatch(fetchAllProductsAPI());
     }, [dispatch]);

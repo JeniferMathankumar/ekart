@@ -105,8 +105,25 @@ export default function Header() {
             icon: "bi-cart3"
         }
     ];
+     const guestMenus = [
+        {
+            name: "Home",
+            path: "/",
+            icon: "bi-house"
+        },
+        {
+            name: "Categories",
+            path: "/category",
+            icon: "bi-grid"
+        },
+        {
+            name: "Products",
+            path: "/product",
+            icon: "bi-box"
+        }
+    ];
 
-    const menus = role === "ADMIN" ? adminMenus : customerMenus;
+    const menus = role === "ADMIN" ? adminMenus : role === "USER" ? customerMenus : guestMenus;
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top custom-navbar">
@@ -170,8 +187,10 @@ export default function Header() {
 
                     <ul className="navbar-nav gap-2">
 
-                        <NotificationDropdown />
-
+                        {role === "ADMIN" || role === "USER" &&
+                          <NotificationDropdown />
+                        }
+                      
                         <UserDropdown />
 
                         <li className={`nav-item ${isNavOpen ? "hide" : ""}`}>

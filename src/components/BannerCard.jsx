@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import bannerService from "../service/banner.service";
-import { toast } from "react-toastify";
 import { FaArrowAltCircleUp } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { deleteBannerByIdApi, fetAllBannersApi } from "../features/banner/bannerSlice";
+import bannerService from "../service/banner.service";
+import { showDeleteConfirm } from "../utils/commonFunctions";
 
 export default function BannerCard() {
 
-    const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
-    const [isLoading, setIsLoading] = useState(true);
+    const { token } = useSelector((state) => state.profile);
+    const { items: banners, loading: isLoading, selectedBanner, successMessage } = useSelector(state => state.banner);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [error, setError] = useState(null);
-
-    const [banners, setBanners] =
-        useState([]);
-
+    const [localBanners, setLocalbanners] = useState([]);
+    console.log("LOCALBANNER", localBanners);
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
 
@@ -20,19 +24,27 @@ export default function BannerCard() {
     const [formData, setFormData] = useState({ title: "", description: "", bannerImg: null });
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [editingBannerId, setEditingBannerId] = useState(null);
 
-    const fetchBanners = async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-            const response = await bannerService
-                .getBanners();
-            setBanners(response.data);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoading(false);
+
+    useEffect(() => {
+        dispatch(fetAllBannersApi());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (Array.isArray(banners)) {
+            setLocalbanners(banners)
+        } else if (Array.isArray(banners?.data)) {
+            setLocalbanners(banners?.data);
         }
+    }, [banners])
+    console.log("BANNER", banners);
+    const resetForm = () => {
+        setFormData({ title: "", description: "", bannerImg: null });
+        setImage(null);
+        setPreview(null);
+        setEditingBannerId(null);
+        setFormErrors({});
     };
     // Form validation
     const validateForm = () => {
@@ -40,12 +52,11 @@ export default function BannerCard() {
         if (!formData.title.trim()) errors.title = "Banner name is required";
         if (formData.title.length > 50)
             errors.title = "Banner Name must be under 50 characters";
-        // if (!formData.description.trim())
-        //     errors.description = "Banner Description is required";
-        if (formData.bannerImg == null) {
+        const hasExistingImage = Boolean(editingBannerId && formData.bannerImg && typeof formData.bannerImg === "string");
+        const hasSelectedImage = Boolean(image);
+        if (!hasExistingImage && !hasSelectedImage) {
             errors.bannerImg = "Banner image is required";
         }
-        console.log(errors);
         setFormErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -74,62 +85,56 @@ export default function BannerCard() {
         if (file) {
             setError(null);
             setImage(file);
-            formData.bannerImg = file;
+            setFormData((prev) => ({ ...prev, bannerImg: file }));
             setPreview(URL.createObjectURL(file));
         }
     }
 
 
     useEffect(() => {
-
-        fetchBanners();
-
-    }, []);
+        const bannerToEdit = location.state?.bannerToEdit;
+        if (bannerToEdit) {
+            setEditingBannerId(bannerToEdit.id);
+            setFormData({
+                title: bannerToEdit.title || "",
+                description: bannerToEdit.description || "",
+                bannerImg: bannerToEdit.bannerImg || null,
+            });
+            setPreview(
+                bannerToEdit.bannerImg
+                    ? `http://localhost:8080${bannerToEdit.bannerImg}`
+                    : null
+            );
+            setImage(null);
+            setFormErrors({});
+        }
+    }, [location.state?.bannerToEdit]);
 
     const handleSubmit = async (e) => {
-
-
-        const formdata = new FormData();
-
-
         e.preventDefault();
         if (!validateForm()) return;
-        const form =
-            new FormData();
 
-        form.append(
-            "title",
-            formData.title
-        );
+        const form = new FormData();
 
-        form.append(
-            "description",
-            formData.description
-        );
+        form.append("title", formData.title);
+        form.append("description", formData.description);
 
-        if (preview && formData.bannerImg != null) {
-            form.append("bannerImg", formData.bannerImg);
+        if (image) {
+            form.append("bannerImg", image);
         }
+
         setIsSubmitting(true);
-        console.log("FORM",formData);
         try {
-
-            const response =
-                await bannerService
-                    .createBanner(
-                        form,
-                        token
-                    );
-
-            toast.success(
-                response.data.message ||
-                "Banner Added"
-            );
-
-            fetchBanners();
-            setFormData({title:"",description:"",bannerImg:null})
-            setImage(null);
-            setPreview(null);
+            let response;
+            if (editingBannerId) {
+                response = await bannerService.updateBanner(form, editingBannerId, token);
+                toast.success(response.data.message || "Banner Updated");
+            } else {
+                response = await bannerService.createBanner(form, token);
+                toast.success(response.data.message || "Banner Added");
+            }
+            resetForm();
+            navigate(-1);
 
         } catch (err) {
             setFormErrors({ submit: "Operation failed. Please try again." });
@@ -138,31 +143,42 @@ export default function BannerCard() {
             setIsSubmitting(false);
         }
     };
-
+    // Handle delete
     const handleDelete = async (id) => {
 
+        const confirmed = await showDeleteConfirm("Delete Banner?", "You won't be able to recover it!", "warning");
+        if (!confirmed) return;
+
+        const toastId = toast.loading("Deleting...")
         try {
+            const response = await dispatch(deleteBannerByIdApi({id,token}));
+        
+            if(response){
+            dispatch(fetAllBannersApi());
+            }
 
-            await bannerService
-                .deleteBanner(
-                    id,
-                    token
-                );
+            toast.update(toastId, {
+                render: response.data?.message || "Banner deleted successfully",
+                type: response.data?.code == 400 ? "error" : "success",
+                autoClose: 3000,
+                isLoading: false
+            })
 
-            toast.success(
-                "Banner Deleted"
-            );
+        } catch (err) {
+            console.error("Delete Error:", err);
 
-            fetchBanners();
-
-        } catch (error) {
-
-            toast.error(
-                error.response?.data?.message
-            );
-        }
-    };
-
+            toast.update(toastId, {
+                render:
+                    err.response?.data?.message ||
+                    err.message ||
+                    "Oops! Failed to delete banner",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+                closeButton: true
+            });
+        };
+    }
     return (
 
         <div className="container">
@@ -170,7 +186,7 @@ export default function BannerCard() {
             <div className="card p-4 shadow">
 
                 <h3 className="mb-3">
-                    Banner Management
+                    {editingBannerId ? "Edit Banner" : "Banner Management"}
                 </h3>
 
                 <form onSubmit={handleSubmit}>
@@ -186,7 +202,7 @@ export default function BannerCard() {
                             placeholder="Banner Title"
                             value={formData.title}
                             onChange={(e) =>
-                               setFormData((prev) => ({ ...prev, title: e.target.value }))
+                                setFormData((prev) => ({ ...prev, title: e.target.value }))
                             }
                         />
                         {formErrors.title && (
@@ -203,8 +219,8 @@ export default function BannerCard() {
                             placeholder="Description"
                             value={formData.description}
                             onChange={(e) =>
-                               setFormData((prev) => ({ ...prev, description: e.target.value }))
-                      }
+                                setFormData((prev) => ({ ...prev, description: e.target.value }))
+                            }
                         />
                         {formErrors.description && (
                             <div className="invalid-feedback">{formErrors.description}</div>
@@ -264,7 +280,7 @@ export default function BannerCard() {
                                     className="btn btn-danger mt-2"
                                     onClick={() => {
                                         setImage(null);
-                                        formData.bannerImg = null;
+                                        setFormData((prev) => ({ ...prev, bannerImg: null }));
                                         setPreview(null);
                                     }}
                                 >
@@ -274,11 +290,16 @@ export default function BannerCard() {
                         }
 
                     </div>
-                    <button
-                        className="btn btn-primary m-2"
-                    >
-                        Upload Banner
-                    </button>
+                    <div className="d-flex gap-2 mt-3">
+                        <button className="btn btn-primary" disabled={isSubmitting}>
+                            {editingBannerId ? "Update Banner" : "Upload Banner"}
+                        </button>
+                        {editingBannerId && (
+                            <button type="button" className="btn btn-outline-secondary" onClick={resetForm}>
+                                Cancel Edit
+                            </button>
+                        )}
+                    </div>
 
                 </form>
 
@@ -290,7 +311,7 @@ export default function BannerCard() {
                     <span>{error}</span>
                     <button
                         className="btn btn-sm btn-outline-danger ms-auto"
-                        onClick={fetchCategories}
+                        onClick={dispatch(fetAllBannersApi())}
                     >
                         Retry
                     </button>
@@ -307,10 +328,9 @@ export default function BannerCard() {
             )}
             {/* BANNER GRID */}
             <div className="row mt-4">
-                {!isLoading && !error && banners.length > 0 && (
-                    banners.map(
+                {!isLoading && !error && localBanners.length > 0 && (
+                    localBanners.map(
                         (banner) => (
-
                             <div
                                 className="col-md-4"
                                 key={banner.id}
@@ -351,9 +371,7 @@ export default function BannerCard() {
                                         <button
                                             className="btn btn-danger"
                                             onClick={() =>
-                                                handleDelete(
-                                                    banner.id
-                                                )
+                                                handleDelete(banner.id)
                                             }
                                         >
                                             Delete
@@ -369,13 +387,6 @@ export default function BannerCard() {
 
 
             </div>
-
-            {/* Category count */}
-            {!isLoading && banners.length > 0 && (
-                <p className="text-muted small mt-4">
-                    Showing {banners.length} of {banners.length} categories
-                </p>
-            )}
 
             <style>{`
                      .hover-shadow:hover {

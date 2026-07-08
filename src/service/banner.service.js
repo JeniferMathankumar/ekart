@@ -12,7 +12,18 @@ const createBanner = (form, token) => {
         }
     );
 };
+
+const updateBanner = (form, id, token) => {
+    return httpClient.put(`/admin/banners/${id}`, form,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }
+    );
+};
 const deleteBanner = (id, token) => {
+    console.log("API DELETE", id+"***"+token);
     return httpClient.delete( `/admin/banners/${id}`,
         {
             headers: {
@@ -25,5 +36,6 @@ const deleteBanner = (id, token) => {
 export default {
     getBanners,
     createBanner,
+    updateBanner,
     deleteBanner
 };

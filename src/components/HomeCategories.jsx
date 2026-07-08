@@ -58,7 +58,7 @@ export default function HomeCategories() {
             <div className="row g-4 justify-content-center">
 
                 {localCategories
-                    .slice(0, 8)
+                    .slice(0, 4)
                     .map((cat) => (
 
                         <div
@@ -92,7 +92,7 @@ export default function HomeCategories() {
 
                                 <small className="text-muted">
 
-                                    {cat.productCount ?? 0} Products
+                                    {cat.productcount ?? 0} Products
 
                                 </small>
 

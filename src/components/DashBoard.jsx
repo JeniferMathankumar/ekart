@@ -3,9 +3,13 @@ import { FaBoxOpen, FaList, FaImage } from "react-icons/fa";
 import RecentProducts from "./RecentProducts";
 import RecentCategories from "./RecentCategories";
 import '../assets/css/dashboard.css'
+import { useSelector } from "react-redux";
+import Dashboard_banner from "./Dashboard_banner";
 
 export default function Dashboard() {
-
+    const {items: categories} = useSelector((state) => state.category);
+    const {items: products} = useSelector((state) => state.product);
+    const {items: banner, totalitem: bannerCount} = useSelector((state) => state.banner);
     const [dashboard, setDashboard] = useState({
         products: 0,
         categories: 0,
@@ -17,9 +21,9 @@ export default function Dashboard() {
         // API Call
 
         setDashboard({
-            products: 120,
-            categories: 15,
-            banners: 8
+            products: products.length || 0,
+            categories: categories.length || 0,
+            banners: bannerCount || 0,
         });
 
     }, []);
@@ -27,11 +31,11 @@ export default function Dashboard() {
     return (
         <div className="container-fluid">
 
-            <h2 className="mb-4 p-2 ">
+            {/* <h2 className="mb-4 p-2 ">
                 Dashboard
-            </h2>
+            </h2> */}
 
-            <div className="row g-4">
+            <div className="row g-4 p-3">
 
                 {/* PRODUCTS */}
 
@@ -85,6 +89,7 @@ export default function Dashboard() {
                 </div>
 
             </div>
+            <Dashboard_banner/>
 
             <div className="row mt-4">
 

@@ -18,7 +18,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 const Productcard = () => {
-    const {token,role} = useSelector((state) => state.profile);
+    const { token, role } = useSelector((state) => state.profile);
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     // New state to track if we are editing a specific product
@@ -128,9 +128,10 @@ const Productcard = () => {
             errors.prodstock = "Stock is required";
         if (formData.prodstock <= 0)
             errors.prodstock = "Stock must be positive value"
-        if (formData.imageUrl == null) {
-            errors.imageUrl = "Category image is required";
-        }
+
+        // if (formData.imageUrl == null) {
+        //     errors.imageUrl = "Category image is required";
+        // }
         setFormErrors(errors);
         return Object.keys(errors).length === 0;
     }
@@ -147,8 +148,9 @@ const Productcard = () => {
         form.append("description", formData.proddesc);
         form.append("price", formData.prodprice);
         form.append("stock", formData.prodstock);
-        form.append("imageUrl", formData.imageUrl);
-
+        if (image != null) {
+            form.append("imageUrl", formData.imageUrl);
+        }
         try {
             if (editingProductId) {
                 await dispatch(updateProductAPI({ id: editingProductId, form, token })).unwrap();
@@ -164,23 +166,6 @@ const Productcard = () => {
             setIsSubmitting(false);
         }
     };
-
-    // // FIX: Make handleEdit accept the ID correctly and use async/await
-    // const handleEdit = async (id)=>{
-    //     console.log("productid", id)
-    //     setEditingProductId(id);
-    //    await productService.getProductById(id).then(response => {
-    //         const product = response.data; // Assuming data is inside .data
-    //         console.log("product", product)
-    //         setProductName(product.name);
-    //         setProductPrice(product.price);
-    //         setProductDesc(product.description);
-    //         setProductStock(product.stock);
-    //         setSelectedOption(product.categoryId);
-    //     }).catch(error => {
-    //         console.log("Error fetching product:", error);
-    //     });
-    // }
 
     const handleDelete = async (id) => {
         const confirmed = await showDeleteConfirm("Delete Product?", "You won't be able to recover it!", "warning");
@@ -211,7 +196,6 @@ const Productcard = () => {
         setPreview(null);
         setImage(null);
         setError(null);
-
         if (product != null) {
             setEditingProductId(product.id);
             await dispatch(fetchProductByIdAPI(product.id));
@@ -311,7 +295,7 @@ const Productcard = () => {
                                         className="btn btn-primary rounded-pill px-4 shadow-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#openModal"
-                                        onClick={openModal}
+                                        onClick={()=>openModal()}
                                     >
                                         <FaPlus className="me-2" />
                                         Add Product
@@ -718,7 +702,6 @@ const Productcard = () => {
                                             type="file"
                                             id="proImage"
                                             hidden
-                                            className={`form-control ${formErrors.imageUrl ? "is-invalid" : ""}`}
                                             accept="image/*"
                                             onChange={(e) => handleImageChange(e)}
                                         />
@@ -756,9 +739,9 @@ const Productcard = () => {
                                                 />
                                             )}
                                         </label>
-                                        {formErrors.imageUrl && (
+                                        {/* {formErrors.imageUrl && (
                                             <div className="invalid-feedback">{formErrors.imageUrl}</div>
-                                        )}
+                                        )} */}
                                         {
                                             preview && (
                                                 <button
