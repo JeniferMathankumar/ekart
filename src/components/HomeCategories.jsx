@@ -76,7 +76,7 @@ export default function HomeCategories() {
                                     <img
                                         src={
                                             cat.imageUrl
-                                                ? `${import.meta.env.VITE_BACKEND_URL}${cat.imageUrl}`
+                                                ? cat.imageUrl
                                                 : "https://placehold.co/200"
                                         }
                                         alt={cat.name}

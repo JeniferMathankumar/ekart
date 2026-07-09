@@ -20,8 +20,7 @@ export default function RecentProducts() {
     const [localProducts, setLocalProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState("newest");
     const navigate = useNavigate();
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
+
     useEffect(() => {
         dispatch(fetchAllProductsAPI());
     }, [dispatch]);
@@ -106,7 +105,7 @@ const IMAGE_BASE_URL =
                                             <img
                                                 src={
                                                     product.imageUrl
-                                                        ? `${import.meta.env.VITE_BACKEND_URL}${product.imageUrl}`
+                                                        ? product.imageUrl
                                                         : "https://placehold.co/60x60"
                                                 }
                                                 alt={product.name}

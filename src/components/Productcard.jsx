@@ -35,8 +35,7 @@ const Productcard = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [sortOrder, setSortOrder] = useState("name-asc");
     const cancelModalRef = useRef(null);
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
+
     const { items: categoryItems, loading: categoryLoading, error: categoryError } = useSelector((state) => state.category);
     const {
         items: products,
@@ -546,7 +545,7 @@ const IMAGE_BASE_URL =
                                             <img
                                                 src={
                                                     product.imageUrl
-                                                        ? `${import.meta.env.VITE_BACKEND_URL}${product.imageUrl}`
+                                                        ? product.imageUrl
                                                         : "https://placehold.co/60x60"
                                                 }
                                                 alt={product.name}
@@ -727,7 +726,7 @@ const IMAGE_BASE_URL =
                                                 )
                                                     :
                                                     <img
-                                                        src={`${import.meta.env.VITE_BACKEND_URL}${formData.imageUrl}`}
+                                                        src={formData.imageUrl}
                                                         alt="image"
                                                         className="preview-image"
                                                     />

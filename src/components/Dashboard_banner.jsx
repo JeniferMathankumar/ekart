@@ -11,8 +11,6 @@ export default function Dashboard_banner() {
     const [localbanners, setLocalBanners] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
     useEffect(() => {
         dispatch(fetAllBannersApi());
     }, [dispatch]);
@@ -104,7 +102,7 @@ const IMAGE_BASE_URL =
                                                 <img
                                                     src={
                                                         ban.bannerImg
-                                                            ? `${import.meta.env.VITE_BACKEND_URL}${ban.bannerImg}`
+                                                            ? ban.bannerImg
                                                             : "https://placehold.co/60x60"
                                                     }
                                                     alt={ban.title}

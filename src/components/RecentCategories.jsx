@@ -16,8 +16,6 @@ export default function RecentCategories() {
     const [sortOrder, setSortOrder] = useState("newest");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
 
     // Fetch categories
     useEffect(()=>{
@@ -102,7 +100,7 @@ const IMAGE_BASE_URL =
                                             <img
                                                 src={
                                                     cat.imageUrl
-                                                        ? `${import.meta.env.VITE_BACKEND_URL}${cat.imageUrl}`
+                                                        ? cat.imageUrl
                                                         : "https://placehold.co/60x60"
                                                 }
                                                 alt={cat.name}

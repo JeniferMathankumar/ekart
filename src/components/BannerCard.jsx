@@ -25,8 +25,7 @@ export default function BannerCard() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [editingBannerId, setEditingBannerId] = useState(null);
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
+
 
     useEffect(() => {
         dispatch(fetAllBannersApi());
@@ -103,7 +102,7 @@ const IMAGE_BASE_URL =
             });
             setPreview(
                 bannerToEdit.bannerImg
-                    ? `${IMAGE_BASE_URL}${bannerToEdit.bannerImg}`
+                    ? bannerToEdit.bannerImg
                     : null
             );
             setImage(null);
@@ -258,7 +257,7 @@ const IMAGE_BASE_URL =
                                 )
                                     :
                                     <img
-                                        src={`${import.meta.env.VITE_BACKEND_URL}${formData.bannerImg}`}
+                                        src={`${formData.bannerImg}`}
                                         alt="image"
                                         className="preview-image"
                                     />
@@ -343,7 +342,7 @@ const IMAGE_BASE_URL =
 
                                     <img
                                         src={
-                                            `${IMAGE_BASE_URL}${banner.bannerImg}`
+                                            banner.bannerImg
                                         }
                                         className="card-img-top"
                                         style={{

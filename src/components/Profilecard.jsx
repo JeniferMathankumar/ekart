@@ -27,8 +27,7 @@ const Profilecard = () => {
     const [errormsg, setErrorMsg] = useState({});
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
+
 
     useEffect(() => {
         if (profileName || profileEmail || profileRole || profileimage) {
@@ -154,7 +153,7 @@ const IMAGE_BASE_URL =
                             {image ? (
                                 <img
                                     className="avatar"
-                                    src={`${import.meta.env.VITE_BACKEND_URL}${image}`}
+                                    src={image}
                                     alt="Preview"
                                     width="200"
                                 />

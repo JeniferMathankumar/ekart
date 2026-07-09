@@ -12,8 +12,7 @@ export default function UserMasterCard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { token } = useSelector((state) => state.profile);
-const IMAGE_BASE_URL =
-    "https://ekart-backend-production-bc50.up.railway.app";
+
     useEffect(() => {
         fetchAllUsers();
     }, []);
@@ -150,7 +149,7 @@ const IMAGE_BASE_URL =
                                                         <img
                                                             src={
                                                                 user.profileImage
-                                                                    ? `${import.meta.env.VITE_BACKEND_URL}${user.profileImage}`
+                                                                    ? user.profileImage
                                                                     : "https://placehold.co/60x60"
                                                             }
                                                             alt={user.username}
