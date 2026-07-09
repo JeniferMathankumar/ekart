@@ -1,23 +1,3 @@
-// import { Link, NavLink } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-// import '../assets/css/header.css'
-// import AdminHeader from "./AdminNavBar";
-// import CustomerHeader from "./CustomerNavBar";
-// import { useSelector } from "react-redux";
-
-// export default function Header() {
-//  const { name, email, role, profileimage, tokenExpiry, loading } = useSelector((state) => state.profile)
-    
-
-//     return role === "ADMIN"
-//         ? <AdminHeader />
-//         : <CustomerHeader />;
-
-    
-// }
-
-
-
 
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";

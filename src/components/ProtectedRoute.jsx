@@ -1,10 +1,15 @@
 import { useSelector } from 'react-redux';
-import {Navigate} from 'react-router-dom'
-function ProtectedRoute({children}){
- const {token,role} = useSelector((state) => state.profile);
+import { Navigate } from 'react-router-dom'
+function ProtectedRoute({ children, allowedRoles }) {
+    const { token, role } = useSelector((state) => state.profile);
 
-    if(role === "USER"){
-        return <Navigate to='/' replace/>;
+    if (!allowedRoles.includes(role)) {
+
+        if (role === "ADMIN") {
+            return <Navigate to="/admin/dashboard" replace />;
+        }
+
+        return <Navigate to="/" replace />;
     }
     return children;
 }

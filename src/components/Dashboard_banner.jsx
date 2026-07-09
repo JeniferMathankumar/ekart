@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEdit, FaFileImage, FaImages, FaPen, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetAllBannersApi } from "../features/banner/bannerSlice";
+import { fetAllBannersApi,deleteBannerByIdApi } from "../features/banner/bannerSlice";
 import { useNavigate } from "react-router-dom";
 import { showDeleteConfirm } from "../utils/commonFunctions";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 export default function Dashboard_banner() {
 
     const { items: banner, totalitem: bannerCount } = useSelector((state) => state.banner);
+    const { token } = useSelector((state) => state.profile);
     const [localbanners, setLocalBanners] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -59,7 +60,7 @@ export default function Dashboard_banner() {
             });
         };
     }
-    console.log("BANNER", banner);
+
     return (
         <>
             <div className="card border-0 shadow-lg rounded-4 my-3">

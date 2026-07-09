@@ -25,7 +25,7 @@ export const updateBannerByIdApi = await createAsyncThunk(
     },
 )
 export const deleteBannerByIdApi = await createAsyncThunk(
-    "banner/deleteyid",
+    "banner/deletebyid",
     async ({ id, token }, thunkApi) => {
         console.log("RESRRSRSRSR" , id+"&*&*&*&"+token);
         try {

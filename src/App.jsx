@@ -38,7 +38,13 @@ function App() {
                 <Header />
                 <TitleManager />
                 <Routes>
-                    <Route path='/' element={<Homecard />} />
+
+                    <Route path='/'
+                        element={
+                            <ProtectedRoute allowedRoles={["USER",""]}>
+                                <Homecard />
+                            </ProtectedRoute>
+                        } />
                     <Route path="/auth/:mode" element={<Auth />} />
                     <Route path='/category' element={<Categorycard />} />
                     <Route path='/wishlist' element={<NotCreated />} />
@@ -46,30 +52,30 @@ function App() {
                     <Route path='/address' element={<NotCreated />} />
                     <Route path='/cart' element={<NotCreated />} />
                     <Route path='/admin/category' element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <Categorycard />
                         </ProtectedRoute>
                     } />
                     <Route path='/product' element={<Productcard />} />
                     <Route path='/admin/product' element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <Productcard />
                         </ProtectedRoute>
                     } />
                     <Route path='/admin/dashboard' element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <Dashboard />
                         </ProtectedRoute>
                     } />
                     <Route path='/admin/users' element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <UserMasterCard />
                         </ProtectedRoute>
                     } />
                     <Route
                         path="/admin/banner"
                         element={
-                            <ProtectedRoute>
+                            <ProtectedRoute allowedRoles={["ADMIN"]}>
                                 <BannerCard />
                             </ProtectedRoute>
                         }
@@ -77,7 +83,7 @@ function App() {
                     <Route
                         path="/admin/orders"
                         element={
-                            <ProtectedRoute>
+                            <ProtectedRoute allowedRoles={["ADMIN"]}>
                                 <NotCreated />
                             </ProtectedRoute>
                         }

@@ -46,7 +46,6 @@ export default function HomeProducts() {
             {
 
                 categoryList.map(category => {
-                    console.log("Category:", category);
                     const categoryProducts = productList.filter(product =>
                         product.categoryId === category.id
                     );
