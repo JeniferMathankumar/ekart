@@ -94,11 +94,11 @@ export default function Forgot() {
     const verifyOTP = async (e) => {
         e.preventDefault();
 
-        console.log("OTP:", otp);
-        console.log("Type:", typeof otp);
+        // console.log("OTP:", otp);
+    //    / console.log("Type:", typeof otp);
 
         const otpvale = otp.join("");
-        console.log("AFTER OTP:", otpvale);
+        // console.log("AFTER OTP:", otpvale);
         setErrors({});
         const returnvalue = validateOtp(otpvale);
         const substring = returnvalue.substring();

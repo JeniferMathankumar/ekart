@@ -8,7 +8,7 @@ import loginbg from '../assets/loginbg.avif'
 
 function Auth() {
     const url = useParams();
-    console.log("url", url);
+    // console.log("url", url);
     return (
         <div className="container-fluid vh-100 m-0 p-0"
         >

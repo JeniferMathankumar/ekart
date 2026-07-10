@@ -10,7 +10,7 @@ import { fetchAllCategoriesAPI } from "../features/category/categorySlice";
 export default function RecentCategories() {
     const { items: categories, loading: isLoading, error: reduxError, successMessage } = useSelector((state) => state.category);
     const { token, role } = useSelector((state) => state.profile);
-    console.log("Redux Categories:", categories, " Loading:", isLoading, "Error:", reduxError, "Success:", successMessage);
+    // console.log("Redux Categories:", categories, " Loading:", isLoading, "Error:", reduxError, "Success:", successMessage);
     const [localCategories, setLocalCategories] = useState([]);
 
     const [sortOrder, setSortOrder] = useState("newest");

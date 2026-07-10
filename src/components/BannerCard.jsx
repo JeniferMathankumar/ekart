@@ -16,7 +16,6 @@ export default function BannerCard() {
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
     const [localBanners, setLocalbanners] = useState([]);
-    console.log("LOCALBANNER", localBanners);
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
 
@@ -38,7 +37,6 @@ export default function BannerCard() {
             setLocalbanners(banners?.data);
         }
     }, [banners])
-    console.log("BANNER", banners);
     const resetForm = () => {
         setFormData({ title: "", description: "", bannerImg: null });
         setImage(null);

@@ -8,7 +8,7 @@ export default function SearchBar() {
         const value =
             e.target.search.value;
 
-        console.log(value);
+        // console.log(value);
     };
 
     return (

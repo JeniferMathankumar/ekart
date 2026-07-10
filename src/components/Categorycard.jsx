@@ -18,7 +18,7 @@ const CategoryCard = () => {
   const dispatch = useDispatch();
   const { items: categories, loading: isLoading, error: reduxError, successMessage } = useSelector((state) => state.category);
   const {token,role} = useSelector((state) => state.profile);
-  console.log("Redux Categories:", categories," Loading:", isLoading, "Error:", reduxError, "Success:", successMessage);
+  // console.log("Redux Categories:", categories," Loading:", isLoading, "Error:", reduxError, "Success:", successMessage);
   const [localCategories, setLocalCategories] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -77,7 +77,7 @@ const CategoryCard = () => {
     if (formData.imageUrl == null) {
       errors.imageUrl = "Category image is required";
     }
-    console.log(errors);
+    // console.log(errors);
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -100,12 +100,12 @@ const CategoryCard = () => {
       if (editingCategory) {
         const resultAction = await dispatch(updateCategoryAPI({ id: editingCategory.id, category: formdata, token }));
         if (updateCategoryAPI.fulfilled.match(resultAction)) {
-          console.log("Category updated in Redux:", resultAction.payload);
+          // console.log("Category updated in Redux:", resultAction.payload);
         }
       } else {
         const resultAction = await dispatch(createCategoryAPI({ category: formdata, token }));
         if (createCategoryAPI.fulfilled.match(resultAction)) {
-          console.log("Category created in Redux:", resultAction.payload);
+          // console.log("Category created in Redux:", resultAction.payload);
         }
       }
       closeModal();
@@ -128,7 +128,7 @@ const CategoryCard = () => {
     const toastId = toast.loading("Deleting...")
     try {
       const response = await categoryService.deleteCat(id, token);
-      console.log("Delete Response:", response.data);
+      // console.log("Delete Response:", response.data);
 
       await dispatch(fetchAllCategoriesAPI());
 

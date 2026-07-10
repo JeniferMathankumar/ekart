@@ -58,7 +58,7 @@ export default function Register() {
         const register = { name, email, password };
 
         userService.register(register).then(response => {
-            console.log("res", response.data);
+            // console.log("res", response.data);
             window.alert("Registration Successful! Please Login.");
             navigate("/auth/login");
         }).catch(error => {

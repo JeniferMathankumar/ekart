@@ -161,7 +161,7 @@ const Productcard = () => {
             closeModal();
         } catch (err) {
             setFormErrors({ submit: err || "Operation failed. Please try again." });
-            console.log(err);
+            // console.log(err);
         } finally {
             setIsSubmitting(false);
         }

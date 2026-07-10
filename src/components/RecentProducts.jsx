@@ -15,7 +15,7 @@ export default function RecentProducts() {
         successMessage,
         selectedProduct,
     } = useSelector((state) => state.product);
-    console.log("Redux Recent Products:", products, "Loading:", productLoading, "Error:", productError, "Success:", successMessage, "Selected Product:", selectedProduct);
+    // console.log("Redux Recent Products:", products, "Loading:", productLoading, "Error:", productError, "Success:", successMessage, "Selected Product:", selectedProduct);
     const dispatch = useDispatch();
     const [localProducts, setLocalProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState("newest");
@@ -47,7 +47,7 @@ export default function RecentProducts() {
                     return a.name.localeCompare(b.name);
             }
         });
-    console.log("filteredProducts", filteredProducts)
+    // console.log("filteredProducts", filteredProducts)
 
     return (
 

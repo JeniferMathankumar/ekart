@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function UserMasterCard() {
     const [users, setUsers] = useState([]);
-    console.log("users", users);
+    // console.log("users", users);
     const [activeUsers, setActiveUsers] = useState(0);
     const [inactiveUsers, setInactiveUsers] = useState(0);
     const [loading, setLoading] = useState(true);

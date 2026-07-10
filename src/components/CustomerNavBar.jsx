@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function CustomerHeader() {
     const {  role, profileimage } = useSelector((state) => state.profile)
-console.log("ROLEEEEE",role);
+// console.log("ROLEEEEE",role);
     return (
 
         <nav className="

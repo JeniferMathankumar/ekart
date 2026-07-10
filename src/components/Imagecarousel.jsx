@@ -29,7 +29,7 @@ const Imagecarousel = () => {
             .then(response => {
                 setImages(response.data.data)
             }).catch(error => {
-                console.log(error);
+                // console.log(error);
             });
 
     }, [])
